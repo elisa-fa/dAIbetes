@@ -24,4 +24,19 @@ Recognizing that reliable help shouldn't depend on a signal, GemmaPulse is desig
 
 # Getting started
 Follow these steps to run dAIbetes locally on your machine:
-1. 
+
+### 1. Prerequisites
+Ensure you have **Python 3.9+** and **Ollama** installed on your system.
+* Download Ollama: [ollama.com](https://ollama.com)
+
+### 2. Prepare the AI models
+Open your terminal and download the three models required for the app:
+```bash
+ollama pull gemma4
+ollama pull llava
+ollama pull nomic-embed-text
+```
+
+### 3. Clone the repository
+
+
