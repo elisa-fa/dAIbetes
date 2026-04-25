@@ -39,4 +39,16 @@ ollama pull nomic-embed-text
 
 ### 3. Clone the repository
 
+### 4. Install the dependencies
+Install the necessary python libraries:
+```bash
+pip install -r requirements.txt
+```
+### 5. Run the application
+Start the Stramlit interface:
+```bash
+streamlit run app.py
+```
+The app will automatically open in your default browser.
+
 
