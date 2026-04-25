@@ -88,34 +88,23 @@ def analyze_history_with_gemma(meals_df, bg_df, vectorstore):
 
 
 def analyze_image_with_vision(uploaded_file, mode="Meal"):
-    # 1. Carichiamo l'immagine con PIL per gestire rotazione e qualità
+    # 1. Load image with PIL to deal with rotation and quality
     img = Image.open(uploaded_file)
     
-    # Raddrizza l'immagine se il telefono l'ha salvata girata (EXIF orientation)
+    # (EXIF orientation)
     img = ImageOps.exif_transpose(img)
     
-    # Se l'immagine è enorme, la ridimensioniamo mantenendo i dettagli (es. 1000px)
-    # Ma non troppo piccola come fa Streamlit di default!
+    # Fixing image size to keep details (es. 1000px)
     img.thumbnail((1000, 1000))
     
-    # Convertiamo in byte per Ollama
+    # Byte conversion for Ollama
     buf = io.BytesIO()
-    img.save(buf, format='JPEG', quality=95) # Alta qualità
+    img.save(buf, format='JPEG', quality=95) # High quality
     image_bytes = buf.getvalue()
 
-    model_vision = "llava" # Llava è meglio di Moondream per il testo
+    model_vision = "llava" 
 
-    if mode == "Meal":
-        prompt = "Identify the main food and estimate its weight. Be concise."
-    else:
-        # Prompt super specifico per etichette italiane
-        prompt = """
-        This is an Italian nutrition label. 
-        Focus ONLY on 'Carboidrati' (per 100g).
-        Tell me ONLY the number. 
-        If you see 'di cui zuccheri', ignore it, I want the total 'Carboidrati'.
-        Output example: '65'.
-        """
+    prompt = "Identify the main food and estimate its weight. Be concise."
 
     try:
         response = ollama.generate(model=model_vision, prompt=prompt, images=[image_bytes])
@@ -395,7 +384,7 @@ elif menu == "🧮 Insulin Calculator":
     # --- PART 2: ADD ITEM TO CURRENT MEAL ---
     st.subheader("🥣 Step 2: Add Items to your Plate")
 
-    # Inizializziamo la lista del pasto corrente se non esiste
+    # Current meal list initialization (if non existent)
     if "current_meal_items" not in st.session_state:
         st.session_state.current_meal_items = []
     
@@ -435,16 +424,16 @@ elif menu == "🧮 Insulin Calculator":
         st.divider()
         st.subheader("🍽️ Your Plate Summary")
         
-        # Mostriamo la tabella degli alimenti aggiunti
+        # Showing table with added elements
         temp_df = pd.DataFrame(st.session_state.current_meal_items)
         st.table(temp_df)
         
-        # Calcoli totali
+        # Total calculation
         total_meal_cho = sum(item['cho'] for item in st.session_state.current_meal_items)
-        # Qui usiamo il 'new_ratio' (I:C) definito nel tuo profilo
+        # Using 'new_ratio' (I:C) defined in the profile
         final_insulin = round(total_meal_cho / new_ratio, 1)
 
-        # Visualizzazione affiancata per Carbo e Insulina
+        # Visualization for Carbo and insulin
         col_res1, col_res2 = st.columns(2)
         col_res1.metric("Total Carbs", f"{round(total_meal_cho, 1)} g")
         col_res2.metric("Suggested Insulin Dose", f"{final_insulin} Units", delta_color="inverse")
@@ -455,7 +444,7 @@ elif menu == "🧮 Insulin Calculator":
         col_end1, col_end2 = st.columns(2)
         
         if col_end1.button("✅ Confirm & Log Full Meal", type="primary"):
-            # Salvataggio nel log
+            # Saving in the log
             meal_summary_name = ", ".join([item['item'] for item in st.session_state.current_meal_items])
             new_row = {
                 "Date": datetime.now().strftime("%Y-%m-%d %H:%M"), 
