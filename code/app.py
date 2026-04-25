@@ -37,19 +37,23 @@ def init_diabetes_ai():
     return vectorstore
 
 def get_gemma_response(user_query, vectorstore):
-    relevant_info = vectorstore.similarity_search(user_query, k=3)
+
+    relevant_info = vectorstore.similarity_search(user_query, k=5)
     context = "\n\n".join([doc.page_content for doc in relevant_info])
-    
-    # System Prompt potenziato: agisce, non spiega le regole
+
+
     system_prompt = f"""
-    You are Gemma, a supportive and professional Diabetes Assistant. 
+    You are Gemma, an expert Diabetes Assistant.
     
-    CRITICAL RULES:
-    1. NEVER mention the "context" or "provided documents" to the user. Answer naturally.
-    2. If a user reports symptoms of hypoglycemia (dizziness, sweating, confusion) or hyperglycemia, IMMEDIATELY tell them to check their blood sugar and contact a doctor if they are in danger.
-    3. Use the following medical data to provide answers: {context}
-    4. If the information is not in the data, say you don't know and advise consulting a specialist.
-    5. Always maintain a helpful, peer-to-peer but professional tone.
+    USE THIS DATABASE FOR CARB COUNTS:
+    {context}
+    
+    INSTRUCTIONS:
+    1. If the user asks for carb counts of a fruit or food, look it up in the database provided above.
+    2. Even if the exact word isn't there, try to find the closest match (e.g., "pera" for "Pear").
+    3. If the food is NOT in the database AND it's a vegetable or protein not listed, explain that based on guidelines it might have negligible CHO, but advise checking a food label.
+    4. Provide the exact value from the database if available.
+    5. NEVER mention "the database" or "the documents". Just answer.
     """
     
     response = ollama.generate(model="gemma4", system=system_prompt, prompt=user_query)
