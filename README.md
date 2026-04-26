@@ -3,6 +3,9 @@
 
 ⚠️ **Medical Disclaimer:** This application is NOT a medical device. It is a prototype developed for educational and hackathon purposes only. It has not undergone clinical testing. Always consult a healthcare professional for medical advice and treatment.
 
+## App preview
+![Preview](./assets/preview.png)
+
 # Overview
 dAIbetes is an intelligent assistant created to provide concrete support for individuals facing the daily challenges of diabetes, especially those who may struggle to manage the complexity of the disease independently.
 
@@ -59,5 +62,4 @@ The app will automatically open in your default browser.
 * **Database:** ChromaDB (Local Vector Store)
 * **Frontend:** Streamlit
 
-## App preview
-![Preview](./assets/preview.png)
+
