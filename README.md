@@ -58,3 +58,6 @@ The app will automatically open in your default browser.
 * **Orchestration:** LangChain
 * **Database:** ChromaDB (Local Vector Store)
 * **Frontend:** Streamlit
+
+## App preview
+![Preview](./assets/preview.png)
