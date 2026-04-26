@@ -51,4 +51,10 @@ streamlit run app.py
 ```
 The app will automatically open in your default browser.
 
-
+## Tech stack
+* **LLM:** Gemma 4 (via Ollama)
+* **Vision:** Llava
+* **Embeddings:** Nomic-embed-text
+* **Orchestration:** LangChain
+* **Database:** ChromaDB (Local Vector Store)
+* **Frontend:** Streamlit
