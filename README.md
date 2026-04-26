@@ -7,7 +7,7 @@
 ![Preview](./assets/preview.png)
 
 # Overview
-dAIbetes is an intelligent assistant created to provide concrete support for individuals facing the daily challenges of diabetes, especially those who may struggle to manage the complexity of the disease independently.
+**dAIbetes** is an intelligent assistant created to provide concrete support for individuals facing the daily challenges of diabetes, especially those who may struggle to manage the complexity of the disease independently.
 
 Recognizing that reliable help shouldn't depend on a signal, GemmaPulse is designed to break down technological barriers: it requires no internet connection. By leveraging the local power of Gemma 4, the app provides grounded medical support even in remote locations or offline situations. This ensures that the user is never alone in managing their health, providing a "safety net" that is available in any place, at any hour.
 
